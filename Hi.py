@@ -30,13 +30,18 @@ invertedWidth=invertEndianess(decimalToHex32Str(width))
 invertedHeight=invertEndianess(decimalToHex32Str(height))
 print("w: "+invertedWidth)
 print("h: "+invertedHeight)
+#each line must have a number of byte dividable by 4
+padding = 0
+while ((padding+width*3)%4!=0):
+    padding+=1
+print("Padding per line"+str(padding))
 
 dibHeader=dibHeader+invertedWidth+invertedHeight+"0100180000000000"#01 00 | 18 00 | 00 00 00 00
-rawDataSize = invertEndianess(decimalToHex32Str(width * height * 3)) #multiply by 3 because it is 24 bit color
+rawDataSize = invertEndianess(decimalToHex32Str((width*3+padding) * (height))) #multiply by 3 because it is 24 bit color
 dibHeader=dibHeader+rawDataSize+"130B0000130B00000000000000000000"
 
 #pixel array data
-pixelArray=pixelArray+"0000FFFFFFFF0000FF0000FF000000"
+pixelArray=pixelArray+"0000FFFFFFFF0000FF000000FF000000"
 
 #setting size before writing
 size = invertEndianess(decimalToHex32Str(len(hexHeader)/2+4+len(additional)/2+len(dibHeader)/2+len(pixelArray)/2))#we divide by two because size is in byte and 1 byte = 2 hex 
