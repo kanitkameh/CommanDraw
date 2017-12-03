@@ -11,7 +11,7 @@ def decimalToHex32Str(int):
     return (str(hex(int)).replace("0x","")).zfill(8)
 
 #opening file
-fo = open("newFile.bmp","wb")
+fo = open(raw_input("Enter the name of the file you want to edit(example.bmp):\n"),"wb")
 
 #writing header field
 hexHeader = ""
