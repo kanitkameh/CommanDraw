@@ -43,9 +43,10 @@ dibHeader=dibHeader+rawDataSize+"130B0000130B00000000000000000000"
 #pixel array data
 x=0
 y=0
+print("Please pay attention! Pixel indexing starts from the bottom left corner!\n")
 while y<height:
     while x<width: 
-        pixelArray=pixelArray+raw_input("Enter color for pixel("+str(x)+", "+str(y)+") in hex: ")
+        pixelArray=pixelArray+invertEndianess(raw_input("Enter color for pixel("+str(x)+", "+str(y)+") in hex: "))
         x+=1
     pixelArray=pixelArray+("00"*padding)
     x=0
