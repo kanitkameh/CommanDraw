@@ -41,8 +41,15 @@ rawDataSize = invertEndianess(decimalToHex32Str((width*3+padding) * (height))) #
 dibHeader=dibHeader+rawDataSize+"130B0000130B00000000000000000000"
 
 #pixel array data
-pixelArray=pixelArray+"0000FFFFFFFF0000FF000000FF000000"
-
+x=0
+y=0
+while y<height:
+    while x<width: 
+        pixelArray=pixelArray+raw_input("Enter color for pixel("+str(x)+", "+str(y)+") in hex: ")
+        x+=1
+    pixelArray=pixelArray+("00"*padding)
+    x=0
+    y+=1
 #setting size before writing
 size = invertEndianess(decimalToHex32Str(len(hexHeader)/2+4+len(additional)/2+len(dibHeader)/2+len(pixelArray)/2))#we divide by two because size is in byte and 1 byte = 2 hex 
 print("Size with reversed endianess "+size+"\n")
