@@ -20,11 +20,10 @@ dibHeader = ""
 pixelArray = ""
 
 hexHeader  = hexHeader + "424D"
-print ("header:"+hexHeader)
 
 dibHeader=dibHeader+"28000000" #hardcoding the size for this header, TO-DO!
-width = input("Enter the width in pixels")
-height = input("Enter the height in pixels")
+width = input("Enter the width in pixels: ")
+height = input("Enter the height in pixels: ")
 
 invertedWidth=invertEndianess(decimalToHex32Str(width))
 invertedHeight=invertEndianess(decimalToHex32Str(height))
@@ -41,12 +40,25 @@ rawDataSize = invertEndianess(decimalToHex32Str((width*3+padding) * (height))) #
 dibHeader=dibHeader+rawDataSize+"130B0000130B00000000000000000000"
 
 #pixel array data
+print("Please pay attention! Pixel indexing starts from the bottom left corner!")
+
+Matrix = [["ffffff" for i in range(height)] for j in range(width)] 
+
 x=0
 y=0
-print("Please pay attention! Pixel indexing starts from the bottom left corner!\n")
+while 1==1:
+    print("Enter a negative coordinate to close and save")
+    x = input("Enter the x coordinate: ")
+    y = input("Enter the y coordinate: ")
+    if(x<0 or y<0):
+        break
+    Matrix[x][y]=invertEndianess(raw_input("Enter color for pixel("+str(x)+", "+str(y)+") in hex\n"))
+
+x=0
+y=0
 while y<height:
     while x<width: 
-        pixelArray=pixelArray+invertEndianess(raw_input("Enter color for pixel("+str(x)+", "+str(y)+") in hex: "))
+        pixelArray=pixelArray+Matrix[x][y]
         x+=1
     pixelArray=pixelArray+("00"*padding)
     x=0
