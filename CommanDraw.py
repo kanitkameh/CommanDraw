@@ -11,7 +11,7 @@ def decimalToHex32Str(int):
     return (str(hex(int)).replace("0x","")).zfill(8)
 
 #opening file
-fo = open(raw_input("Enter the name of the file you want to edit(example.bmp):\n"),"wb")
+fo = open(raw_input("Enter the name of the file you want to edit(\"imageName.bmp\"):\n"),"wb")
 
 #writing header field
 hexHeader = ""
@@ -33,16 +33,16 @@ print("h: "+invertedHeight)
 padding = 0
 while ((padding+width*3)%4!=0):
     padding+=1
-print("Padding per line"+str(padding))
+print("Bytes for padding per line "+str(padding))
 
 dibHeader=dibHeader+invertedWidth+invertedHeight+"0100180000000000"#01 00 | 18 00 | 00 00 00 00
-rawDataSize = invertEndianess(decimalToHex32Str((width*3+padding) * (height))) #multiply by 3 because it is 24 bit color
+rawDataSize = invertEndianess(decimalToHex32Str((width*3+padding) * (height))) #multiply by 3 because it is 24 bit color, 24b = 3B
 dibHeader=dibHeader+rawDataSize+"130B0000130B00000000000000000000"
 
 #pixel array data
 print("Please pay attention! Pixel indexing starts from the bottom left corner!")
-
-Matrix = [["ffffff" for i in range(height)] for j in range(width)] 
+backgroundColor = invertEndianess(raw_input("Enter background color\n")) 
+Matrix = [[backgroundColor for i in range(height)] for j in range(width)] 
 
 x=0
 y=0
