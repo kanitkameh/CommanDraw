@@ -1,3 +1,24 @@
+import os 
+
+def getch():
+    if(os.name=="nt"):
+        import msvcrt
+        return msvcrt.getch()
+    if(os.name=="posix"):
+        import sys, tty, termios
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        tty.setraw(sys.stdin.fileno())
+        ch = sys.stdin.read(1)
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return ch
+
+def clrscr():
+    if(os.name=="nt"):
+        os.system("cls")
+    if(os.name=="posix"):
+        os.system("clear")
+
 def invertEndianess(str):
     invertedStr=""
     i = 0
